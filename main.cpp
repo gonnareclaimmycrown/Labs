@@ -5,9 +5,9 @@ using namespace std;
 int main() {
     double x, slug (1.0), summ (1.0), realfun;
     int k, xd(1), limit (1);
-    cout << "Please enter the variable of x";
+    cout << "Please enter the variable of x"<< endl;
     cin >> x;
-    cout << "Please enter the variable of k";
+    cout << "Please enter the variable of k" << endl;
     cin >> k;
     realfun = (exp(-x));
     cout << fixed;
