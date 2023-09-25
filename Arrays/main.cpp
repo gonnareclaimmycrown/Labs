@@ -13,6 +13,7 @@ int main() {
     cout << "Enter the number of elements in array" << endl;
     cin >> value;
     srand(time(NULL));
+    cout << "first version of array: ";
     for (int i = 0; i < value; i++){
         theonlyone[i] = rand() % (leftmeas - rightmeas) + leftmeas;
     }
@@ -42,26 +43,17 @@ int main() {
         prod = prod * theonlyone[h1+1];
         h1++;
     }
-    cout << endl;
     for (int i = 0; i < (value - count); i++){
         if (abs(theonlyone[i]) <= 1){
             for (int j = i; j < (value - 1); j++ ){
                 theonlyone[j] = theonlyone[j+1];
             }
-        }
-        if (abs(theonlyone[i]) <= 1){
             i--;
-            count++;
-            cout << count << " ";
+            count = count + 1;
         }
     }
-    cout  << value << endl;
-    cout << endl;
     for (int i = value - 1; i >= (value - count); i--){
         theonlyone[i] = 0;
-    }
-    for (int i = 0; i < value; i++){
-    cout << theonlyone[i] << " ";
     }
     cout << endl;
     cout << "Summ of all uneven elements equals: " << summ << endl;
