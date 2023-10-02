@@ -4,12 +4,17 @@
 using namespace std;
 
 int main() {
-    int leftmeas, rightmeas, summ (0), last, prod (1), value, count(0);
+    int leftmeas, rightmeas, summ (0), last, prod (1), value, count(0), temp(1);
     double first;
     int h1(0), h2(0);
     int* theonlyone = new int[value];
     cout << "Enter measurements" << endl;
     cin >> leftmeas >> rightmeas;
+    if (leftmeas > rightmeas){
+        temp = leftmeas;
+        leftmeas = rightmeas;
+        rightmeas = temp;
+    }
     cout << "Enter the number of elements in array" << endl;
     cin >> value;
     srand(time(NULL));
