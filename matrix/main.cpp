@@ -5,21 +5,26 @@
 using namespace std;
 int main() {
     srand(time(NULL));
-    int size, lowerbound, upperbound, sum(0), prod(1), lim(0), max;
+    int size, lowerbound, upperbound, sum(0), prod(1), max, temp;
     start:
     cout << "enter the size of square matrix (0-10)" << endl;
     cin >> size;
     if (size > 10){
-        cout << "unlucky this time, try later" << endl;
+        cout << "unlucky this time, try again)" << endl;
         goto start;
     }
     cout << "enter the lower boundary and the upper boundary of elements for matrix" << endl;
     cin >> lowerbound >> upperbound;
+    if (lowerbound > upperbound){
+        temp = lowerbound;
+        lowerbound = upperbound;
+        upperbound = temp;
+    }
     max = lowerbound;
     vector<vector<int> > v3(size, vector<int>(size));
     for (int i = 0; i < size; i++){
         for (int j = 0; j < size; j++){
-            v3[i][j] = rand() % (upperbound - lowerbound) + lowerbound;
+            v3[i][j] = rand() % (upperbound - lowerbound + 1) + lowerbound;
         }
     }
     for (int i = 0; i < size; i++){
