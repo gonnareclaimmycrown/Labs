@@ -1,0 +1,3 @@
+C:/Users/я/CLionProjects/StringsB1/cmake-build-debug/CMakeFiles/StringsB1.dir
+C:/Users/я/CLionProjects/StringsB1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/я/CLionProjects/StringsB1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
