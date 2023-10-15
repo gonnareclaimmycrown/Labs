@@ -1,55 +1,68 @@
 #include <iostream>
-
+#include <vector>
 using namespace std;
 
 int main() {
-    int xd = 20;
-    char main[xd];
-    int count(0), count1 (0), i(0);
-    cout << "enter text" << endl;
-    cin.getline(main, sizeof(main));
-    while (i < xd){
-        if (int(main[i]) > 58 || int(main[i]) < 48){
-            do {
-                i++;
-            } while (int(main[i]) != 32);
+    int const size = 20;
+    char cool[size];
+    cout << "enter string" << endl;
+    cin.getline(cool, size);
+    vector <char> DigitWords(size);
+    vector <char> DigitWordsFake(size);
+    vector <char> OtherWords(size);
+    int count = 0, i = 0, bear = 0;
+    bool isDigitWord;
+    while (true){
+        cout << i << " ";
+        int j = count;
+        isDigitWord = true;
+            if (int(cool[i]) < 48 || int(cool[i]) > 57){
+                while(int(cool[i]) != 32 && i < size){
+                    OtherWords.push_back(cool[i]);
+                    i++;
+                    isDigitWord = false;
+                    bear = i;
+                    cout << i << " ";
+                }
+            }
+            else if (int(cool[i]) > 47 && int(cool[i]) < 58){
+                while (int(cool[i]) != 32 && i < size){
+                    DigitWordsFake.push_back(cool[i]);
+                    i++;
+                    if (int(cool[i]) < 48 || int(cool[i]) > 57){
+                        isDigitWord = false;
+                        DigitWordsFake.clear();
+                        while (int(cool[i]) != 32 && i < size){
+                            OtherWords.push_back (cool[bear]);
+                            bear++;
+                            i++;
+                        }
+                    }
+                }
+            }
+            count = i;
+            if (isDigitWord){
+                while(j <= count){
+                    j++;
+                    DigitWords.push_back(cool[j]);
+                }
+            }
+            i++;
+            cout << "xd" << " ";
+            if (i >= size){
+                goto end1;
+            }
         }
-        else {
-            for (int j = i; int(main[j]) != 32; j++){
-                count++;
-                main[j-1] = main[j];
-                if (int(main[j]) > 58 || int(main[j]) < 48 ){
-                    while (count != 0){
-                        main[j] = main[j+1];
-                        j++;
-                        count--;
-                    }
-                    for (int k = 0; int(main[k]) != 32; k++){
-                        count = 0;
-                        count1++;
-                    }
-                }
-                i += count1;
-                count1 = 0;
-            }
-            /* do {
-                i++;
-                count++;
-                if (int(main[i]) > 58 || int(main[i]) < 48) {
-                    count = 0;
-                    do {
-                        i++;
-                    } while (int(main[i]) != 32);
-                }
-            for (int j = (i - count); int(main[j]) != 32; j++) {
-                main[j] = main[j + 1];
-            }
-            } while (int(main[i]) != 32);
-             */
+    end1:
+    int k = 0;
+    while (k < sizeof (cool)){
+        cout << DigitWords[k];
+        k++;
     }
-    }
-    for (int j = 0; j < xd; j++){
-        cout << main[j] << " ";
+    k = 0;
+    while (k < sizeof (cool)){
+        cout << OtherWords[k];
+        k++;
     }
     return 0;
 }
