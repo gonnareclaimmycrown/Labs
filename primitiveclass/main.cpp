@@ -27,17 +27,26 @@ fraction::fraction(int numerator, int denominator) {
 }
 
 fraction::fraction(const string &string){
-        int pos = string.find("/");
-        if (pos == string::npos){
+        int pos1 = string.find("/");
+        if (string == ""){
+            cout << "empty input";
+            _numerator = 1;
+            _denominator = 1;
+        }
+        if (pos1 == string::npos){
             _numerator = stoi(string);
             _denominator = 1;
         } else{
-            _numerator = stoi(string.substr(0, pos));
-            _denominator = stoi(string.substr(pos, string.length()));
+            _numerator = stoi(string.substr(0, pos1));
+            _denominator = stoi(string.substr(pos1, string.length()));
         }
+    if (_denominator == 0){
+        cout << ") denominator -> 1";
+        _denominator = 1;
     }
+}
 
-void fraction::simplify() {
+void fraction::simplify(fraction) {
         int gcd1 = gcd(abs(_numerator), _denominator);
         if (gcd1 != 1){
             _numerator /= gcd1;
@@ -45,7 +54,7 @@ void fraction::simplify() {
         }
 }
 
-string fraction::tostring() {
+string fraction::tostring() const {
         string fraction = "";
         if (_numerator == 0){
             fraction.append("0");
@@ -59,11 +68,50 @@ string fraction::tostring() {
         return fraction;
 }
 
-fraction& fraction::operator*(fraction fraction){
-        _numerator = _numerator * fraction.getNumerator();
-        _denominator = _denominator * fraction.getDenominator();
+fraction& fraction::operator*(fraction second) {
+        int result_num;
+        int result_den;
+        result_num = _numerator * second._numerator;
+        result_den = _denominator * second._denominator;
+        fraction result(result_num, result_den);
+        simplify(result);
+    return result;
     }
 
-    int main() {
+fraction& fraction::operator/(fraction second){
+    int result_num;
+    int result_den;
+    result_num = _numerator * second._denominator;
+    result_den = _denominator * second._numerator;
+    fraction result(result_num, result_den);
+    simplify(result);
+    return result;
+}
 
+fraction& fraction::operator+(fraction second) {
+    int result_num;
+    int result_den;
+    result_num = _numerator * second._denominator + second._numerator * _denominator;
+    result_den = _denominator * second._denominator;
+    fraction result(result_num, result_den);
+    simplify(result);
+    return result;
+}
+
+fraction& fraction::operator-(fraction second) {
+    int result_num;
+    int result_den;
+    result_num = _numerator * second._denominator - second._numerator * _denominator;
+    result_den = _denominator * second._denominator;
+    fraction result(result_num, result_den);
+    simplify(result);
+    return result;
+}
+
+    int main() {
+        fraction first(2, 3);
+        fraction second(3, 5);
+        fraction third("5/7");
+        fraction result = (first * second) + third;
+        result.tostring();
 }

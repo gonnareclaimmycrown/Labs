@@ -12,16 +12,17 @@ private:
     int _numerator;
     int _denominator;
 
-void simplify();
+void simplify(fraction);
+public:
     fraction(int numerator, int denominator);
-    fraction(const string &string);;
-    int getNumerator();
-    int getDenominator();
-    string tostring();
+    fraction(const string &string);
+    int getDenominator;
+    int getNumerator;
+    string tostring() const;
 
-    fraction& operator + (const fraction &fraction);
-    fraction& operator - (const fraction &fraction);
+    fraction& operator + (fraction fraction);
+    fraction& operator - (fraction fraction);
     fraction& operator * (fraction fraction);
-    fraction& operator / (const fraction &fraction);
+    fraction& operator / (fraction fraction);
 };
 
