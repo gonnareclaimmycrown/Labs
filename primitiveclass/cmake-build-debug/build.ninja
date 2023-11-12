@@ -55,6 +55,12 @@ build CMakeFiles/primitiveclass.dir/main.cpp.obj: CXX_COMPILER__primitiveclass_u
   OBJECT_DIR = CMakeFiles\primitiveclass.dir
   OBJECT_FILE_DIR = CMakeFiles\primitiveclass.dir
 
+build CMakeFiles/primitiveclass.dir/class.cpp.obj: CXX_COMPILER__primitiveclass_unscanned_Debug C$:/Users/unluckyme/CLionProjects/primitiveclass/class.cpp || cmake_object_order_depends_target_primitiveclass
+  DEP_FILE = CMakeFiles\primitiveclass.dir\class.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\primitiveclass.dir
+  OBJECT_FILE_DIR = CMakeFiles\primitiveclass.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target primitiveclass
@@ -63,7 +69,7 @@ build CMakeFiles/primitiveclass.dir/main.cpp.obj: CXX_COMPILER__primitiveclass_u
 #############################################
 # Link the executable primitiveclass.exe
 
-build primitiveclass.exe: CXX_EXECUTABLE_LINKER__primitiveclass_Debug CMakeFiles/primitiveclass.dir/main.cpp.obj
+build primitiveclass.exe: CXX_EXECUTABLE_LINKER__primitiveclass_Debug CMakeFiles/primitiveclass.dir/main.cpp.obj CMakeFiles/primitiveclass.dir/class.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\primitiveclass.dir
