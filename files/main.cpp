@@ -3,22 +3,16 @@
 #include <string>
 using namespace std;
 int main() {
-    string input_file_name("..\\input.txt");
-
-    ifstream input_file(input_file_name);
-    if (!input_file) {
+    ifstream input_file("..\\input.txt");
+    if (!input_file.is_open()) {
         cout << "File no found." << endl;
         return 0;
     }
 
-    string output_file1_name("..\\output1.txt");
+    ofstream output_file1("..\\output1.txt");
+    ofstream output_file2("..\\output2.txt");
 
-    string output_file2_name("..\\output2.txt");
-
-    ofstream output_file1(output_file1_name);
-    ofstream output_file2(output_file2_name);
-
-    if (!output_file1 || !output_file2) {
+    if (!output_file1.is_open() || !output_file2.is_open()) {
         cout << "Couldn't open the files" << endl;
         return 0;
     }
@@ -26,8 +20,8 @@ int main() {
     string line;
     while (getline(input_file, line)) {
         int word_count = 0;
-        for (char c : line) {
-            if (c == ' ') {
+        for (int i = 0; i < line.length(); i++) {
+            if (line[i] == ' ' && line[i-1] != ' ') {
                 word_count++;
             }
         }
