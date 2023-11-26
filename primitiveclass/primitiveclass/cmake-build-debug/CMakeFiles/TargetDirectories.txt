@@ -1,0 +1,3 @@
+C:/Users/unluckyme/CLionProjects/primitiveclass/cmake-build-debug/CMakeFiles/primitiveclass.dir
+C:/Users/unluckyme/CLionProjects/primitiveclass/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/unluckyme/CLionProjects/primitiveclass/cmake-build-debug/CMakeFiles/rebuild_cache.dir
