@@ -29,7 +29,7 @@ fraction::fraction(int numerator, int denominator) {
     }
 }
 
-fraction::fraction(const string &string){
+/* fraction::fraction(const string &string){
     int pos1 = string.find("/");
     if (string == ""){
         cout << "empty input";
@@ -48,6 +48,7 @@ fraction::fraction(const string &string){
         _denominator = 1;
     }
 }
+*/
 
 void fraction::simplify(fraction) {
     int gcd1 = gcd(abs(_numerator), _denominator);

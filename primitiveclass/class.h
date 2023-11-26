@@ -7,6 +7,7 @@
 
 #endif //PRIMITIVECLASS_CLASS_H
 #include "string"
+using namespace std;
 class fraction{
 private:
     int _numerator;
@@ -16,8 +17,12 @@ void simplify(fraction);
 public:
     fraction(int numerator, int denominator);
     fraction(const string &string);
-    int getDenominator;
-    int getNumerator;
+    int GetDenominator(){
+        return _denominator;
+    };
+    int GetNumerator(){
+        return _numerator;
+    }
     string tostring() const;
 
     fraction& operator + (fraction fraction);
