@@ -1,0 +1,3 @@
+C:/Users/unluckyme/CLionProjects/inheritance/cmake-build-debug/CMakeFiles/inheritance.dir
+C:/Users/unluckyme/CLionProjects/inheritance/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/unluckyme/CLionProjects/inheritance/cmake-build-debug/CMakeFiles/rebuild_cache.dir
