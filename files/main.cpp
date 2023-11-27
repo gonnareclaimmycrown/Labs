@@ -4,15 +4,10 @@
 using namespace std;
 int main() {
     ifstream input_file("..\\input.txt");
-    if (!input_file.is_open()) {
-        cout << "File no found." << endl;
-        return 0;
-    }
-
     ofstream output_file1("..\\output1.txt");
     ofstream output_file2("..\\output2.txt");
 
-    if (!output_file1.is_open() || !output_file2.is_open()) {
+    if (!output_file1.is_open() || !output_file2.is_open() || !input_file.is_open()) {
         cout << "Couldn't open the files" << endl;
         return 0;
     }
