@@ -13,19 +13,23 @@
 using namespace std;
 
 class student{
+public:
+    static int count;
 protected:
-    char name;
+    char* name;
     int age;
     int year;
     int group;
-    const int number;
-    vector<char> indcreate(char name, int number, int group, int year);
-    vector <char> identificator = indcreate(name, number, group, year);
+    int number;
+    int id;
+    int NameSize;
+    student(int age, int year, int group, const int number, int id, string name);
+    student(const student &ts);
 
 public:
-    char GetName(){
+    char *GetName() {
         return name;
-    };
+    }
     int GetAge(){
         return age;
     };
@@ -35,66 +39,103 @@ public:
     int GetGroup(){
         return group;
     };
+    int GetNameSize() const {
+        return NameSize;
+    }
     const int GetNumber(){
         return number;
     };
-    vector<char> GetIdentificator(){
-        return identificator;
+    int GetId(){
+        return id;
     };
-    char SetName(char value){
-        name = value;
-    }
-    int SetYear(int value){
+    void SetYear(int value){
         year = value;
     }
-    int SetAge(int value){
+    void SetAge(int value){
         age = value;
     }
-    int SetGroup(int value){
+    void SetGroup(int value){
         group = value;
     }
+    void SetName(string _name){
+        this->name =new char[NameSize];
+        for (int i = 0; i < NameSize; i++){
+            this->name[i] = _name[i];
+        }
+    }
 
-    friend ostream operator << (ostream& os, student& testsubj);
-
+    friend ostream &operator << (ostream& os, student& testsubj);
 };
 
 class studenta1: protected student{
-private:
+protected:
     int marks1[4];
+    double avg;
 public:
+    friend ostream &operator << (ostream& os, studenta1& testsubj);
+    studenta1(int age, int year, int group, const int number, int id, std::string name, int a, int b, int c, int d);
+    studenta1(studenta1 &ts);
+    using student::GetAge;
+    using student::GetGroup;
+    using student::GetYear;
+    using student::GetName;
+    using student::GetId;
+    using student::GetNumber;
     int GetMarks() {
         for (int i = 0; i < 4; i++) {
         cout << marks1[i];
         }
     }
-    int SetMarks(int a, int b, int c, int d){
-        marks1[1] = a;
-        marks1[2] = b;
-        marks1[3] = c;
-        marks1[4] = d;
+
+    double GetAvg(){
+        return avg;
     }
 
-    virtual double avg(int marks[]);
+    virtual int SetMark1(int a) {
+        marks1[0] = a;
+    }
+
+    virtual int SetMark2(int b) {
+        marks1[1] = b;
+    }
+
+    virtual int SetMark3(int c) {
+        marks1[2] = c;
+    }
+
+    virtual int SetMark4(int d) {
+        marks1[3] = d;
+    }
 
 };
-class studenta2: private studenta1{
+class studenta2: studenta1{
 private:
     int marks[5];
+    double avg1;
+    double avgayear;
 public:
-
-    double avg(int marks[]) override;
 
     int GetMarks() {
         for (int i = 0; i < 5; i++) {
             cout << marks[i];
         }
     }
-    int SetMarks(int a, int b, int c, int d, int e){
-        marks[1] = a;
-        marks[2] = b;
-        marks[3] = c;
-        marks[4] = d;
-        marks[5] = e;
+    int SetMark1(int a) {
+        marks[0] = a;
     }
-
+    int SetMark2(int b) {
+        marks[1] = b;
+    }
+    int SetMark3(int c) {
+        marks[2] = c;
+    }
+    int SetMark4(int d) {
+        marks[3] = d;
+    }
+    int SetMark5(int e){
+        marks[4] = e;
+    }
+    studenta2(studenta1 &ts, int a, int b, int c, int d, int e);
+    studenta2(studenta2 &ts);
+    friend ostream &operator << (ostream& os, studenta2& testsubj);
 };
