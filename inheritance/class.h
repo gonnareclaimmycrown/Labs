@@ -65,6 +65,12 @@ public:
     }
 
     friend ostream &operator << (ostream& os, student& testsubj);
+    virtual double AvgMarkAft1session(){
+        return 0;
+    };
+    virtual double AvgMarkAft2session(){
+        return 0;
+    };
 };
 
 class studenta1: protected student{
@@ -106,7 +112,7 @@ public:
     virtual int SetMark4(int d) {
         marks1[3] = d;
     }
-
+    double AvgMarkAft1session() override;
 };
 class studenta2: studenta1{
 private:
@@ -114,6 +120,8 @@ private:
     double avg1;
     double avgayear;
 public:
+    double AvgMarkAft1session() override;
+    double AvgMarkAft2session() override;
 
     int GetMarks() {
         for (int i = 0; i < 5; i++) {

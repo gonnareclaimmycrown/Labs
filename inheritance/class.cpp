@@ -63,6 +63,11 @@ studenta1::studenta1(int age, int year, int group, const int number, int id, str
     double avg = ((a+b+c+d) / 4);
 }
 
+double studenta1::AvgMarkAft1session() {
+        double avg = (marks1[0] + marks1[1] + marks1[2] + marks1[3])/4;
+        return avg;
+}
+
 studenta1::studenta1(studenta1 &ts) : student(age, year, group, number, id, name) {
     this->year = ts.GetYear();
     this->group = ts.GetGroup();
@@ -89,6 +94,14 @@ ostream& operator << (ostream& os, studenta1& ts){
     }
 }
 
+double studenta2::AvgMarkAft1session() {
+    double avg = (marks1[0] + marks1[1] + marks1[2] + marks1[3])/4;
+    return avg;
+}
+double studenta2::AvgMarkAft2session() {
+    double avg = (marks[0] + marks[1] + marks[2] + marks[3] + marks[4] + marks1[0] + marks1[1] + marks1[2] + marks1[3]) / 9;
+    return avg;
+}
 studenta2::studenta2(studenta2 &ts) : studenta1(age, year, group, number, id, name, marks1[0], marks1[1], marks1[2], marks1[3]){
     this->group = ts.GetGroup();
     this->name = ts.GetName();
