@@ -1,0 +1,81 @@
+﻿  first asm lab.cpp
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(10,5): error C4235: использовано нестандартное расширение: ключевое слово "__asm" данной архитектурой не поддерживается
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(11,9): error C2065: mov: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(11,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "ax"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(11,13): error C2065: ax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(12,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "mov"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(12,9): error C2065: mov: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(12,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "C3"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(12,17): error C2065: eax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(13,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "mov"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(13,9): error C2065: mov: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(13,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "ax"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(13,13): error C2065: ax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(14,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "adc"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(14,9): error C2065: adc: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(14,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "C3"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(14,17): error C2065: eax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(16,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "mov"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(16,9): error C2065: mov: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(16,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "ax"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(16,13): error C2065: ax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(17,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "mov"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(17,9): error C2065: mov: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(17,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "C2"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(17,17): error C2065: eax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(18,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "mov"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(18,9): error C2065: mov: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(18,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "ax"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(18,13): error C2065: ax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(19,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "add"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(19,9): error C2065: add: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(19,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "C2"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(19,17): error C2065: eax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(20,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "cmp"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(20,9): error C2065: cmp: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(20,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "C2"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(21,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "jbe"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(21,9): error C2065: jbe: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(21,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "next1"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(21,13): error C2065: next1: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(23,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "next1"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(24,9): error C2065: add: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(24,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "C3"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(25,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "sub"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(25,13): error C2065: sub: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(25,17): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "C2"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(26,5): error C2143: синтаксическая ошибка: отсутствие ";" перед "}"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(28,5): error C4235: использовано нестандартное расширение: ключевое слово "__asm" данной архитектурой не поддерживается
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(29,9): error C2065: mov: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(29,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "eax"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(29,13): error C2065: eax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(30,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "mov"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(30,9): error C2065: mov: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(30,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "ax"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(30,13): error C2065: ax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(31,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "mov"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(31,9): error C2065: mov: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(31,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "C1"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(31,17): error C2065: eax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(32,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "mov"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(32,9): error C2065: mov: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(32,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "ax"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(32,13): error C2065: ax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(33,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "add"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(33,9): error C2065: add: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(33,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "C1"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(33,17): error C2065: eax: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(34,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "cmp"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(34,9): error C2065: cmp: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(34,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "C2"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(35,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "jge"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(35,9): error C2065: jge: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(35,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "next2"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(35,13): error C2065: next2: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(37,9): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "next2"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(38,9): error C2065: add: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(38,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "C2"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(39,13): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "sub"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(39,13): error C2065: sub: необъявленный идентификатор
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(39,17): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "C1"
+C:\Users\unluckyme\first asm lab\first asm lab\first asm lab.cpp(40,5): error C2143: синтаксическая ошибка: отсутствие ";" перед "}"
