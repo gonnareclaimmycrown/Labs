@@ -1,0 +1,310 @@
+import sys
+from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QGridLayout, QMessageBox, QLabel, QFileDialog, QLineEdit, QMenu, QMenuBar, QMainWindow, QVBoxLayout, QColorDialog
+from PyQt6.QtGui import QPixmap, QIcon, QAction
+
+class UltimateTicTacToe(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+        self.setEnabled(False)
+        self.player_turn = 'X'
+        self.next_board = None
+        self.men_u = Menu
+        self.TicTac_Toe = TicTacToe
+
+    def initUI(self):
+        grid = QGridLayout()
+        self.setLayout(grid)
+
+        self.boards = [[TicTacToe(self, i, j) for j in range(3)] for i in range(3)]
+        for i in range(3):
+            for j in range(3):
+                grid.addWidget(self.boards[i][j], i, j)
+
+    def make_move(self, board, button):
+        def inner():
+            if button.text() == '':
+                button.setText(self.player_turn)
+                button.setStyleSheet(f"color: {self.men_u.getPlayerColor()}; font-size: 35px;") 
+                self.player_turn = 'O' if self.player_turn == 'X' else 'X'
+                self.next_board = (button.row, button.col)
+                self.update_boards()
+                winner = self.check_win(board)
+                if winner is not None:
+                    self.replace_board(board, winner)
+                if board.check_tie():
+                    self.declare_the_end()
+                    self.men_u.reset_game()
+                if self.TicTac_Toe.check_overall_winner():
+                    self.declare_winner(winner)
+                    self.men_u.reset_game()
+                self.TicTac_Toe.check_overall_tie()
+        return inner
+    
+    def declare_the_end(self):
+        msg = QMessageBox()
+        msg.setText(f"I guess this is the end")
+        msg.exec()
+
+    def update_boards(self):
+        for i in range(3):
+            for j in range(3):
+                if isinstance(self.boards[i][j], QPushButton):
+                    self.boards[i][j].setEnabled(False)
+                elif self.next_board is None or self.next_board == (i, j) or isinstance(self.boards[self.next_board[0]][self.next_board[1]], QPushButton):
+                    self.boards[i][j].setEnabled(True)
+                else:
+                    self.boards[i][j].setEnabled(False)
+
+    def replace_board(self, board, winner):
+        i, j = board.row, board.col
+        self.boards[i][j].deleteLater()
+        self.boards[i][j] = QPushButton(winner)
+        self.boards[i][j].setStyleSheet(f"color: {self.men_u.getPlayerColor()}; font-size: 35px;")
+        self.boards[i][j].setEnabled(False)
+        self.layout().addWidget(self.boards[i][j], i, j)
+
+    def check_win(self, board):
+        for i in range(3):
+            if board.buttons[i][0].text() == board.buttons[i][1].text() == board.buttons[i][2].text() != '':
+                return board.buttons[i][0].text()
+
+        for i in range(3):
+            if board.buttons[0][i].text() == board.buttons[1][i].text() == board.buttons[2][i].text() != '':
+                return board.buttons[0][i].text()
+
+        if board.buttons[0][0].text() == board.buttons[1][1].text() == board.buttons[2][2].text() != '':
+            return board.buttons[0][0].text()
+        if board.buttons[0][2].text() == board.buttons[1][1].text() == board.buttons[2][0].text() != '':
+            return board.buttons[0][2].text()
+
+        return None
+
+    def check_winner(self):
+        for board_row in self.boards:
+            for board in board_row:
+                winner = board.check_winner()
+                if winner is not None:
+                    return winner
+        return None
+    
+    def declare_winner(self, winner):
+        msg = QMessageBox
+        msg.setText(f"Player {self.men_u.alias if winner == 'X' else self.men_u.alias1} wins!")
+        msg.exec()
+
+    def reset_board(self):
+        for i in range(3):
+            for j in range(3):
+                self.boards[i][j].reset_board()
+
+
+
+class TicTacToe(QWidget):
+    def __init__(self, parent, row, col):
+        super().__init__()
+        self.parent = parent
+        self.row = row
+        self.col = col
+        self.initUI()
+        self.player_turn = 'X'
+
+    def initUI(self):
+        grid = QGridLayout()
+        self.setLayout(grid)
+
+        self.buttons = [[QPushButton('') for _ in range(3)] for _ in range(3)]
+
+        for i in range(3):
+            for j in range(3):
+                button = self.buttons[i][j]
+                button.row = i
+                button.col = j
+                grid.addWidget(button, i, j)
+                button.clicked.connect(self.parent.make_move(self, button))
+
+    def check_tie(self):
+        for row in self.buttons:
+            for button in row:
+                if button.text() == '':
+                    return False
+        return True
+    
+    def reset_board(self):
+        for i in range(3):
+            for j in range(3):
+                self.buttons[i][j].setText('')
+                self.buttons[i][j].setEnabled(True)
+
+    def check_overall_winner(self):
+        for row in self.buttons:
+            if row[0].text() == row[1].text() == row[2].text() != '':
+                return row[0].text()
+
+        for col in range(3):
+            if self.buttons[0][col].text() == self.buttons[1][col].text() == self.buttons[2][col].text() != '':
+                return self.buttons[0][col].text()
+
+        if self.buttons[0][0].text() == self.buttons[1][1].text() == self.buttons[2][2].text() != '':
+            return self.buttons[0][0].text()
+        if self.buttons[0][2].text() == self.buttons[1][1].text() == self.buttons[2][0].text() != '':
+            return self.buttons[0][2].text()
+
+        return None
+
+    def check_overall_tie(self):
+        for row in self.buttons:
+            for col in range(3):
+                if all(self.buttons[row][col].self.parent.check_winner) and not self.check_overall_winner:
+                    self.parent.declare_the_end()
+
+
+class Menu(QWidget):
+        def __init__(self):
+            super().__init__()
+            self.initUI()
+            self.UltimateTicTacToe = UltimateTicTacToe
+
+        def initUI(self):
+            layout = QGridLayout()
+
+            self.alias = ""
+            self.alias1 = ""
+            self.colors = {"X": "black", "O": "black"}
+            self.nicknameLineEdit = QLineEdit()
+            layout.addWidget(self.nicknameLineEdit, 2, 0)
+
+            self.confirmButton = QPushButton("Confirm Nickname")
+            self.confirmButton.clicked.connect(self.confirm_nickname)
+            layout.addWidget(self.confirmButton, 3, 0)
+
+            self.uploadButton = QPushButton("Upload Photo")
+            self.uploadButton.clicked.connect(self.upload_photo)
+            layout.addWidget(self.uploadButton, 1, 0)
+
+            self.photoLabel = QLabel()
+            layout.addWidget(self.photoLabel, 0, 0)
+
+            self.field = UltimateTicTacToe()
+            layout.addWidget(self.field, 0, 1)
+
+            self.nicknameLineEdit1 = QLineEdit()
+            layout.addWidget(self.nicknameLineEdit1, 2, 2)
+
+            self.confirmButton1 = QPushButton("Confirm Nickname")
+            self.confirmButton1.clicked.connect(self.confirm_nickname1)
+            layout.addWidget(self.confirmButton1, 3, 2)
+
+            self.uploadButton1 = QPushButton("Upload Photo")
+            self.uploadButton1.clicked.connect(self.upload_photo1)
+            layout.addWidget(self.uploadButton1, 1, 2)
+
+            self.photoLabel1 = QLabel()
+            layout.addWidget(self.photoLabel1, 0, 2)
+
+            self.startButton = QPushButton("Let's go!")
+            self.startButton.clicked.connect(self.start_game)
+            layout.addWidget(self.startButton, 1, 1)
+
+            self.setLayout(layout)
+
+            layout2 = QVBoxLayout(self)
+            menuBar = QMenuBar(self)
+            fileMenu = menuBar.addMenu('File')
+            editMenu = menuBar.addMenu('Edit')
+
+            saveButton = QAction(QIcon('save.png'), 'Save', self)
+            loadButton = QAction(QIcon('load.png'), 'Load', self)
+            fileMenu.addAction(saveButton)
+            fileMenu.addAction(loadButton)
+
+            changeXColor = QAction(QIcon('color.png'), 'Change X Color', self)
+            changeOColor = QAction(QIcon('color.png'), 'Change O Color', self)
+            editMenu.addAction(changeXColor)
+            editMenu.addAction(changeOColor)
+            changeXColor.triggered.connect(self.changeXColor)
+            changeOColor.triggered.connect(self.changeOColor)
+
+            self.setGeometry(300, 300, 300, 200)
+            layout.setMenuBar(menuBar)
+            self.setLayout(layout2)
+
+
+        def confirm_nickname(self):
+            self.nickname = self.nicknameLineEdit.text()
+            print(f"Nickname confirmed: {self.nickname}")
+            self.alias = self.nickname
+
+        def upload_photo(self):
+            filename, _ = QFileDialog.getOpenFileName()
+            if filename:
+                pixmap = QPixmap(filename)
+                self.photoLabel.setPixmap(pixmap.scaled(250, 250))
+                
+        def confirm_nickname1(self):
+            self.nickname1 = self.nicknameLineEdit1.text()
+            print(f"Nickname confirmed: {self.nickname}")
+            self.alias1 = self.nickname1
+ 
+        def upload_photo1(self):
+            filename, _ = QFileDialog.getOpenFileName()
+            if filename:
+                pixmap = QPixmap(filename)
+                self.photoLabel1.setPixmap(pixmap.scaled(250, 250))
+
+        def start_game(self):
+            self.confirmButton.setEnabled(False)
+            self.confirmButton1.setEnabled(False)
+            self.nicknameLineEdit.setEnabled(False)
+            self.nicknameLineEdit1.setEnabled(False)
+            self.uploadButton.setEnabled(False)
+            self.uploadButton1.setEnabled(False)
+            self.startButton.setEnabled(False)
+            self.field.setEnabled(True)
+            self.UltimateTicTacToe.player_turn = 'X'
+            for i in range(3):
+                for j in range(3):
+                    self.field.boards[i][j].setEnabled(True)
+            if self.alias == "":
+                self.alias = "X"
+            if self.alias == "":
+                self.alias = "O"
+
+        def reset_game(self):
+            self.confirmButton.setEnabled(True)
+            self.confirmButton1.setEnabled(True)
+            self.nicknameLineEdit.setEnabled(True)
+            self.nicknameLineEdit1.setEnabled(True)
+            self.uploadButton.setEnabled(True)
+            self.uploadButton1.setEnabled(True)
+            self.startButton.setEnabled(True)
+            self.field.setEnabled(False)
+            self.nicknameLineEdit.clear
+            self.nicknameLineEdit1.clear
+            self.photoLabel.clear
+            self.photoLabel1.clear
+            for i in range(3):
+                for j in range(3):
+                    self.field.boards[i][j].reset_board()
+
+
+        def changeXColor(self):
+            color = QColorDialog.getColor()
+            if color.isValid():
+                self.colors['X'] = color.name()
+
+
+        def changeOColor(self):
+            color = QColorDialog.getColor()
+            if color.isValid():
+                self.colors['O'] = color.name()
+
+        def getPlayerColor(self):
+            return self.colors[self.UltimateTicTacToe.player_turn]
+
+
+if __name__ == '__main__':
+    app = QApplication([])
+    ex = Menu()
+    ex.show()
+    sys.exit(app.exec())
