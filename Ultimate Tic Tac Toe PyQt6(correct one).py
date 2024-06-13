@@ -1,7 +1,9 @@
 import sys
+import json
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QGridLayout, QMessageBox, QLabel, QFileDialog, QLineEdit, QMenu, QMenuBar, QMainWindow, QVBoxLayout, QColorDialog, QSizePolicy
-from PyQt6.QtGui import QPixmap, QIcon, QAction
-from PyQt6.QtCore import QSize, Qt
+from PyQt6.QtGui import QPixmap, QIcon, QAction, QImage
+from PyQt6.QtCore import QSize, Qt, QBuffer, QByteArray
+import base64 
 
 class UltimateTicTacToe(QWidget):
     def __init__(self, menu):
@@ -129,36 +131,6 @@ class UltimateTicTacToe(QWidget):
             return board.winner
         return None
     
-    def check_winner(self):
-        for board_row in self.boards:
-            for board in board_row:
-                winner = board.check_winner()
-                if winner is not None:
-                    return winner
-        return None
-    
-    def check_winner1(self):
-        for i in range(3):
-            for j in range(3):
-                winner = self.boards[i][j].check_winner()
-                if winner:
-                    return winner
-
-        for row in range(3):
-            if self.boards[row][0].winner == self.boards[row][1].winner == self.boards[row][2].winner != None:
-                return self.boards[row][0].winner
-
-        for col in range(3):
-            if self.boards[0][col].winner == self.boards[1][col].winner == self.boards[2][col].winner != None:
-                return self.boards[0][col].winner
-
-        if self.boards[0][0].winner == self.boards[1][1].winner == self.boards[2][2].winner != None:
-            return self.boards[0][0].winner
-        if self.boards[0][2].winner == self.boards[1][1].winner == self.boards[2][0].winner != None:
-            return self.boards[0][2].winner
-        
-        return None 
-    
     def declare_winner(self, winner):
         msg = QMessageBox()
         msg.setText(f"Player {menu.alias if winner == 'X' else menu.alias1} wins!")
@@ -175,6 +147,43 @@ class UltimateTicTacToe(QWidget):
                 else:
                     self.boards[i][j].clear_board()
 
+    def save_game(self):
+        file_path, _ = QFileDialog.getSaveFileName(self, "Save File", "", "JSON Files (*.json);;All Files (*)")
+        if file_path:
+            game_state = {
+                'player_info': menu.get_player_info(),
+                'player_turn': self.player_turn,
+                'next_board': self.next_board,
+                'boards': [
+                    [
+                        board.get_state() if isinstance(board, TicTacToe) else {'button': True,'winner': board.text()}
+                        for board in row
+                    ]
+                    for row in self.boards
+                ]
+            }
+            with open(file_path, 'w') as file:
+                json.dump(game_state, file, indent=2)
+
+    def load_game(self):
+        menu.reset_game()
+        file_path, _ = QFileDialog.getOpenFileName(self, "Load File", "", "JSON Files (*.json);;All Files (*)")
+        if file_path:
+            with open(file_path, 'r') as file:
+                game_state = json.load(file)
+                menu.set_player_info(game_state['player_info'])
+            self.player_turn = game_state['player_turn']
+            self.next_board = tuple(game_state['next_board']) if game_state['next_board'] is not None else None
+            for i, row in enumerate(game_state['boards']):
+                for j, board_state in enumerate(row):
+                    if 'button' in board_state:
+                        self.replace_board(self.boards[i][j], board_state['winner'])
+                    else:
+                        self.boards[i][j].deleteLater()
+                        self.boards[i][j] = TicTacToe(self, i, j)
+                        self.boards[i][j].set_state(board_state)
+                        self.layout().addWidget(self.boards[i][j], i, j)
+            self.update_boards()
 
 
 
@@ -239,6 +248,25 @@ class TicTacToe(QWidget):
             return self.winner
 
         return None
+    
+    def get_state(self):
+        return {
+            'buttons': [
+                [button.text() for button in row]
+                for row in self.buttons
+            ],
+            'player_turn': self.player_turn,
+            'winner': self.winner if hasattr(self, 'winner') else None
+        }
+
+    def set_state(self, state):
+        self.player_turn = state['player_turn']
+        self.winner = state['winner']
+        for i, row in enumerate(state['buttons']):
+            for j, text in enumerate(row):
+                button = self.buttons[i][j]
+                button.setText(text)
+                button.setEnabled(text == '')
 
 
     #def check_overall_tie(self):
@@ -316,6 +344,8 @@ class Menu(QWidget):
             editMenu.addAction(changeOColor)
             changeXColor.triggered.connect(self.changeXColor)
             changeOColor.triggered.connect(self.changeOColor)
+            saveButton.triggered.connect(self.field.save_game)
+            loadButton.triggered.connect(self.field.load_game)
 
             self.setGeometry(300, 300, 300, 200)
             layout.setMenuBar(menuBar)
@@ -405,7 +435,39 @@ class Menu(QWidget):
                 return self.colors['X']
             else:
                 return self.colors['O']
+            
+        def get_player_info(self):
+            player_info = {
+                'player1': {
+                    'nickname': self.nicknameLineEdit.text(),
+                    'photo': None
+                },
+                'player2': {
+                    'nickname': self.nicknameLineEdit1.text(),
+                    'photo': None
+                }
+            }
+            for player_key, widgets in [('player1', (self.photoLabel, self.nicknameLineEdit)),
+                                ('player2', (self.photoLabel1, self.nicknameLineEdit1))]:
+                photo_label, _ = widgets
+                if photo_label.pixmap():
+                    buffer = QBuffer()
+                    buffer.open(QBuffer.OpenModeFlag.ReadWrite)
+                    photo_label.pixmap().save(buffer, "PNG")
+                    player_info[player_key]['photo'] = bytes(buffer.data().toBase64()).decode('utf-8')
+            return player_info
 
+        def set_player_info(self, player_info):
+            self.nicknameLineEdit.setText(player_info['player1']['nickname'])
+            self.nicknameLineEdit1.setText(player_info['player2']['nickname'])
+            if player_info['player1']['photo']:
+                image = QImage()
+                image.loadFromData(base64.b64decode(player_info['player1']['photo']))
+                self.photoLabel.setPixmap(QPixmap(image))
+            if player_info['player2']['photo']:
+                image = QImage()
+                image.loadFromData(base64.b64decode(player_info['player2']['photo']))
+                self.photoLabel1.setPixmap(QPixmap(image))
 
 if __name__ == '__main__':
     app = QApplication([])
