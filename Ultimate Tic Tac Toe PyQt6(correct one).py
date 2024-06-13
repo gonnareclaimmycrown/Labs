@@ -37,7 +37,7 @@ class UltimateTicTacToe(QWidget):
                     if (button.row, button.col) == (board.row, board.col):
                         self.enable_boards_without_winner()
                     self.replace_board(board, winner)
-                    ultimate_winner = self.check_win()
+                    ultimate_winner = self.check_ultimate_winner()
                     if ultimate_winner is not None:
                         self.declare_winner(ultimate_winner)
                 if board.check_tie():
@@ -80,48 +80,53 @@ class UltimateTicTacToe(QWidget):
         i, j = board.row, board.col
         self.boards[i][j].deleteLater()
         self.boards[i][j] = QPushButton(winner)
-        self.boards[i][j].setStyleSheet(f"color: {menu.getPlayerColor()}; font-size: 100px;")
+        self.boards[i][j].setStyleSheet(f"color: {menu.getPlayerColor1()}; font-size: 100px;")
         self.boards[i][j].setEnabled(False)
         self.layout().addWidget(self.boards[i][j], i, j)
 
-    def check_win(self):
-        print("Checking for a winner...")
+    def check_ultimate_winner(self):
         for i in range(3):
-            for j in range(3):
-                if (isinstance(self.boards[i][j], TicTacToe) or isinstance(self.boards[i][j], str)):
-                    winner = self.boards[i][j].check_winner()
-                    if winner:
-                        print("xddd")
-                        return winner
+            if self.check_line_winner([(i, 0), (i, 1), (i, 2)]):
+                return self.get_winner_from_board(i, 0)
 
-        
-        for row in range(3):
-            if (isinstance(self.boards[row][0], TicTacToe) or isinstance(self.boards[row][0], str)) and \
-            (isinstance(self.boards[row][1], TicTacToe) or isinstance(self.boards[row][1], str)) and \
-            (isinstance(self.boards[row][2], TicTacToe) or isinstance(self.boards[row][2], str)):
-                if self.boards[row][0].winner is not None and \
-                self.boards[row][0].winner == self.boards[row][1].winner == self.boards[row][2].winner:
-                    print("row winner:", winner)
-                    return self.boards[row][0].winner
+        for j in range(3):
+            if self.check_line_winner([(0, j), (1, j), (2, j)]):
+                return self.get_winner_from_board(0, j)
 
+        if self.check_line_winner([(0, 0), (1, 1), (2, 2)]):
+            return self.get_winner_from_board(1, 1)
+        if self.check_line_winner([(0, 2), (1, 1), (2, 0)]):
+            return self.get_winner_from_board(1, 1)
 
-        for col in range(3):
-            if (isinstance(self.boards[col][0], TicTacToe) or isinstance(self.boards[col][0], str)) and \
-            (isinstance(self.boards[col][1], TicTacToe) or isinstance(self.boards[col][1], str)) and \
-            (isinstance(self.boards[col][2], TicTacToe) or isinstance(self.boards[col][2], str)):
-                if self.boards[col][0].winner == self.boards[col][1].winner == self.boards[col][2].winner != None:
-                    print("col winner:", winner)
-                    return self.boards[row][0].winner
+        return None
 
-        if isinstance(self.boards[0][0], TicTacToe) and isinstance(self.boards[1][1], TicTacToe) and isinstance(self.boards[2][2], TicTacToe):
-            if self.boards[0][0].check_winner() == self.boards[1][1].check_winner() == self.boards[2][2].check_winner() != None:
-                print("diagonal winner:", winner)
-                return self.boards[0][0].check_winner()
-        if isinstance(self.boards[0][2], TicTacToe) and isinstance(self.boards[1][1], TicTacToe) and isinstance(self.boards[2][0], TicTacToe):
-            if self.boards[0][2].check_winner() == self.boards[1][1].check_winner() == self.boards[2][0].check_winner() != None:
-                print("Diagonal winner:", winner)
-                return self.boards[0][2].check_winner()
-        print("lox")
+    def check_line_winner(self, positions):
+        first_board = self.boards[positions[0][0]][positions[0][1]]
+        if isinstance(first_board, QPushButton):
+            first_winner = first_board.text()
+        elif isinstance(first_board, TicTacToe) and first_board.winner is not None:
+            first_winner = first_board.winner
+        else:
+            return False
+
+        for pos in positions[1:]:
+            board = self.boards[pos[0]][pos[1]]
+            if isinstance(board, QPushButton):
+                if board.text() != first_winner:
+                    return False
+            elif isinstance(board, TicTacToe) and board.winner is not None:
+                if board.winner != first_winner:
+                    return False
+            else:
+                return False
+        return True
+
+    def get_winner_from_board(self, i, j):
+        board = self.boards[i][j]
+        if isinstance(board, QPushButton):
+            return board.text()
+        elif isinstance(board, TicTacToe):
+            return board.winner
         return None
     
     def check_winner(self):
@@ -151,7 +156,8 @@ class UltimateTicTacToe(QWidget):
             return self.boards[0][0].winner
         if self.boards[0][2].winner == self.boards[1][1].winner == self.boards[2][0].winner != None:
             return self.boards[0][2].winner
-            return None 
+        
+        return None 
     
     def declare_winner(self, winner):
         msg = QMessageBox()
@@ -159,13 +165,16 @@ class UltimateTicTacToe(QWidget):
         msg.exec()
         menu.reset_game()
 
-    def reset(self):
+    def clear_fields(self):
         for i in range(3):
             for j in range(3):
-                self.boards[i][j].deleteLater()
-                self.boards[i][j] = TicTacToe(self, i, j)
-                self.layout().addWidget(self.boards[i][j], i, j)
-        self.player_turn = 'X'
+                if isinstance(self.boards[i][j], QPushButton):
+                    self.boards[i][j].deleteLater()
+                    self.boards[i][j] = TicTacToe(self, i, j)
+                    self.layout().addWidget(self.boards[i][j], i, j)
+                else:
+                    self.boards[i][j].clear_board()
+
 
 
 
@@ -200,12 +209,12 @@ class TicTacToe(QWidget):
                     return False
         return True
     
-    def reset(self):
-        for i in range(3):
-            for j in range(3):
-                self.buttons[i][j].setText("")
-                self.buttons[i][j].setEnabled(True)
-        self.player_turn = 'X'
+    def clear_board(self):
+        for row in self.buttons:
+            for button in row:
+                button.setText("")
+                button.setEnabled(True)
+            
 
     def check_winner(self):
         for i in range(3):
@@ -243,9 +252,9 @@ class Menu(QWidget):
         def __init__(self):
             super().__init__()
             self.initUI()
-            self.Ultimate_Tic_Tac_Toe = UltimateTicTacToe(self)
 
         def initUI(self):
+            self.field = UltimateTicTacToe(self)
             layout = QGridLayout()
 
             self.alias = ""
@@ -265,7 +274,6 @@ class Menu(QWidget):
             self.photoLabel = QLabel()
             layout.addWidget(self.photoLabel, 0, 0)
 
-            self.field = UltimateTicTacToe(Menu)
             layout.addWidget(self.field, 0, 1)
 
             self.nicknameLineEdit1 = QLineEdit()
@@ -345,14 +353,14 @@ class Menu(QWidget):
             self.uploadButton1.setEnabled(False)
             self.startButton.setEnabled(False)
             self.field.setEnabled(True)
-            Ultimate_Tic_Tac_Toe.player_turn = 'X'
+            self.field.player_turn = 'X'
             for i in range(3):
                 for j in range(3):
                     self.field.boards[i][j].setEnabled(True)
-            if self.alias1 == "":
-                self.alias1 = "X"
             if self.alias == "":
-                self.alias = "O"
+                self.alias = "X"
+            if self.alias1 == "":
+                self.alias1 = "O"
 
         def reset_game(self):
             self.confirmButton.setEnabled(True)
@@ -367,11 +375,10 @@ class Menu(QWidget):
             self.nicknameLineEdit1.clear
             self.photoLabel.clear
             self.photoLabel1.clear
-            for i in range(3):
-                for j in range(3):
-                    if isinstance(self.field.boards[i][j], TicTacToe):
-                        self.field.boards[i][j].reset()
-            Ultimate_Tic_Tac_Toe.player_turn = 'X'
+            self.field.clear_fields()
+            self.field.player_turn = 'X'
+            self.field.next_board = None
+            self.field.update_boards()
             self.colors = {"X": "black", "O": "black"}
 
 
@@ -388,19 +395,20 @@ class Menu(QWidget):
                 self.colors['O'] = color.name()
 
         def getPlayerColor(self):
-            if Ultimate_Tic_Tac_Toe.player_turn == 'X':
-                print(self.colors['X'])
-                print(self.colors['O'])
+            if self.field.player_turn == 'X':
                 return self.colors['X']
             else:
-                print(self.colors['X'])
-                print(self.colors['O'])
+                return self.colors['O']
+            
+        def getPlayerColor1(self):
+            if self.field.player_turn == 'O':
+                return self.colors['X']
+            else:
                 return self.colors['O']
 
 
 if __name__ == '__main__':
     app = QApplication([])
     menu = Menu()
-    Ultimate_Tic_Tac_Toe = UltimateTicTacToe(menu)
     menu.show()
     sys.exit(app.exec())
